@@ -1,0 +1,15 @@
+datasource db {
+  provider = "mysql"
+  url      = "mysql://alan:123456@localhost:3306/alan-todos"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Todo {
+  id          Int       @id @default(autoincrement())
+  name        String
+  status      String
+  timestamp   DateTime    @default(now())
+}
