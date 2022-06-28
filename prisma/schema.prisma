@@ -1,15 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "mysql"
   url      = "mysql://alan:123456@localhost:3306/alan-todos"
 }
 
-generator client {
-  provider = "prisma-client-js"
+model about {
+  id          String   @id @db.Char(36)
+  name        String   @db.VarChar(255)
+  content     String?  @db.MediumText
+  status      Int      @db.TinyInt
+  createdAt   DateTime @db.DateTime(0)
+  updatedAt   DateTime @db.DateTime(0)
+  banner      String   @db.VarChar(255)
+  route       String   @db.VarChar(255)
+  description String   @db.VarChar(255)
+  category    String   @db.VarChar(255)
 }
 
-model Todo {
-  id          Int       @id @default(autoincrement())
-  name        String
-  status      String
-  timestamp   DateTime    @default(now())
+model business_config {
+  business_config_id String   @id
+  key                String   @db.VarChar(50)
+  value              String   @db.VarChar(255)
+  remark             String?  @db.Text
+  created_time       DateTime @default(now()) @db.Timestamp(3)
+  updated_time       DateTime @default(now()) @db.Timestamp(3)
+  row_num            Int      @unique(map: "row_num")
+}
+
+model home {
+  id        String   @id @db.Char(36)
+  name      String   @db.VarChar(255)
+  pic       String   @db.VarChar(255)
+  intro     String?  @db.MediumText
+  status    Int      @db.TinyInt
+  createdAt DateTime @db.DateTime(0)
+  updatedAt DateTime @db.DateTime(0)
+}
+
+model product_categories {
+  id          String   @id @db.Char(36)
+  name        String   @db.VarChar(255)
+  status      Int      @db.TinyInt
+  createdAt   DateTime @db.DateTime(0)
+  updatedAt   DateTime @db.DateTime(0)
+  route       String?  @db.VarChar(255)
+  description String?  @db.MediumText
+
+  @@map("product-categories")
+}
+
+model products {
+  id        String   @id @db.Char(36)
+  name      String   @db.VarChar(255)
+  pic       String   @db.VarChar(255)
+  intro     String?  @db.MediumText
+  content   String   @db.MediumText
+  status    Int      @db.TinyInt
+  createdAt DateTime @db.DateTime(0)
+  updatedAt DateTime @db.DateTime(0)
+  route     String?  @db.VarChar(255)
+  category  String   @db.VarChar(255)
+  recommend Int      @default(0) @db.TinyInt
+}
+
+model todo {
+  id        BigInt    @id @default(autoincrement()) @db.UnsignedBigInt
+  name      String?   @default("") @db.VarChar(100)
+  status    String?   @db.VarChar(20)
+  timestamp DateTime? @db.DateTime(6)
+}
+
+model user {
+  id        String   @id @db.Char(36)
+  name      String   @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  avatar    String?  @db.VarChar(255)
+  roles     String?  @db.Text
+  intro     String?  @db.MediumText
+  status    Int      @db.TinyInt
+  createdAt DateTime @db.DateTime(0)
+  updatedAt DateTime @db.DateTime(0)
 }
